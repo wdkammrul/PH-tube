@@ -27,7 +27,7 @@ const handleLoadId = async (categoryId) => {
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
   const data = await response.json();
-  // console.log(data.data[0].others);
+  // console.log(data.data[0].others.posted_date);
 
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
@@ -46,7 +46,31 @@ const handleLoadId = async (categoryId) => {
     cardContainer.appendChild(div);
   } else {
     data.data.forEach((videos) => {
-      // console.log(videos);
+      // console.log(videos.others.posted_date);
+      const postedDataTimeSet = parseInt(videos.others.posted_date);
+      // console.log(postedDataTimeSet);
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+      // console.log(currentTimestamp);
+      const timeDifferenceInSeconds = currentTimestamp - postedDataTimeSet;
+      // console.log(timeDifferenceInSeconds);
+
+      const hours = Math.floor(timeDifferenceInSeconds / 3600) % 24;
+      const minutes = Math.floor((timeDifferenceInSeconds % 3600) / 60);
+
+      let formattedHours = "";
+      let formattedMinutes = "";
+
+      if (hours > 0) {
+        formattedHours = `${hours}hrs`;
+      }
+
+      if (minutes > 0) {
+        formattedMinutes = `${minutes}min`;
+      }
+
+      const formattedDate = `${formattedHours} ${formattedMinutes} ago`;
+      console.log(formattedDate);
+
 
       const div = document.createElement("div");
       div.innerHTML = `
@@ -54,8 +78,15 @@ const handleLoadId = async (categoryId) => {
             <figure>
               <img class="lg:w-[312px] lg:h-[160px]"
                src="${videos.thumbnail}"
+               
               />
+              ${
+                videos.others.posted_date
+                  ? `<h1 class="text-end absolute left-48 bottom-44 bg-slate-950 text-white text-sm m-2 p-2 rounded-lg">${formattedDate}</h1>`
+                  : ""
+              }
             </figure>
+            
             <div class="pb-8 px-3">
               <div class="flex items-center">
                   <img class="w-8 h-8 ml-3 rounded-full" src="${
