@@ -27,7 +27,7 @@ const handleLoadId = async (categoryId) => {
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
   const data = await response.json();
-  console.log(data.data[0].others);
+  // console.log(data.data[0].others);
 
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
