@@ -5,6 +5,7 @@ const handleCategory = async () => {
   const data = await response.json();
   // console.log(data.data[3].category);
   // const drawingClick = data.data[3].category;
+  // console.log(data.data[0].category);
 
   const tabContainer = document.getElementById("tab-container");
 
@@ -26,7 +27,7 @@ const handleLoadId = async (categoryId) => {
     `https://openapi.programming-hero.com/api/videos/category/${categoryId}`
   );
   const data = await response.json();
-  console.log(data.data);
+  console.log(data.data[0].others);
 
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
@@ -91,12 +92,5 @@ const handleLoadId = async (categoryId) => {
   }
 };
 
-
-// const blogClick = () =>{
-//      window.location.href = "blog.html";
-// }
-
 handleCategory();
 handleLoadId("1000");
-
-
